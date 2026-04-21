@@ -367,7 +367,7 @@
       <div class="divider">✦ ✦ ✦</div>
 
       <div class="field">
-        <label>Disponibilidades (até 6)</label>
+        <label>Disponibilidades</label>
 
         <!-- Seletor de nova entrada -->
         <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,162,39,0.2);border-radius:14px;padding:14px;">
@@ -446,8 +446,6 @@
       const date = dateInput.value;
       if (!date) { alert('Selecione uma data.'); return; }
       if (!currentPeriod) { alert('Selecione um período (Manhã, Tarde ou Noite).'); return; }
-      if (entries.length >= 6) { alert('Máximo de 6 disponibilidades.'); return; }
-
       // Evita duplicata exata de data+período
       const dup = entries.find(e => e.date === date && e.period === currentPeriod);
       if (dup) { alert('Essa data e período já foram adicionados.'); return; }
