@@ -11,9 +11,10 @@ exports.handler = async (event) => {
   };
 
   try {
-    const { pageIds, dates, period } = JSON.parse(event.body);
+    // entries = [{ date, period }, ...] — até 6 itens
+    const { pageIds, entries } = JSON.parse(event.body);
 
-    if (!pageIds || !dates || dates.length === 0 || !period) {
+    if (!pageIds || !entries || entries.length === 0) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Dados incompletos.' }) };
     }
 
@@ -23,27 +24,21 @@ exports.handler = async (event) => {
       'Notion-Version': '2022-06-28',
     };
 
-    // Monta as propriedades de Data 1 a Data 6
-    const dateFields = ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5', 'Data 6'];
-    const dateProperties = {};
-
-    dateFields.forEach((field, i) => {
-      dateProperties[field] = dates[i]
-        ? { date: { start: dates[i] } }
-        : { date: null }; // limpa o campo se não tiver data
-    });
+    // Monta as propriedades: Data 1..6 e Período 1..6
+    const properties = {};
+    for (let i = 0; i < 6; i++) {
+      const num = i + 1;
+      const entry = entries[i];
+      properties[`Data ${num}`]    = entry ? { date: { start: entry.date } } : { date: null };
+      properties[`Período ${num}`] = entry ? { select: { name: entry.period } } : { select: null };
+    }
 
     // Atualiza todos os registros do músico
     const updates = pageIds.map(pageId =>
       fetch(`https://api.notion.com/v1/pages/${pageId}`, {
         method: 'PATCH',
         headers,
-        body: JSON.stringify({
-          properties: {
-            ...dateProperties,
-            'Período': { select: { name: period } },
-          }
-        })
+        body: JSON.stringify({ properties })
       })
     );
 
@@ -53,10 +48,13 @@ exports.handler = async (event) => {
       return { statusCode: 500, body: JSON.stringify({ error: 'Erro ao atualizar registros.' }) };
     }
 
+    // Link do WhatsApp do primeiro período (referência)
+    const whatsappLink = WHATSAPP_LINKS[entries[0]?.period] || '';
+
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ success: true, whatsappLink: WHATSAPP_LINKS[period] || '' }),
+      body: JSON.stringify({ success: true, whatsappLink }),
     };
   } catch (err) {
     return {
