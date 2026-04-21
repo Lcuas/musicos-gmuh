@@ -4,6 +4,7 @@ exports.handler = async (event) => {
   }
 
   const NOTION_TOKEN = process.env.NOTION_TOKEN;
+  const DATABASE_ID = process.env.DATABASE_ID || '6470132cae26424a963e735ca5e34f2a';
   const WHATSAPP_LINKS = {
     'Manhã': process.env.WHATSAPP_MANHA || '',
     'Tarde': process.env.WHATSAPP_TARDE || '',
@@ -11,9 +12,9 @@ exports.handler = async (event) => {
   };
 
   try {
-    const { pageIds, date, period } = JSON.parse(event.body);
+    const { name, instruments, dates, period } = JSON.parse(event.body);
 
-    if (!pageIds || !date || !period) {
+    if (!name || !instruments || !dates || dates.length === 0 || !period) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Dados incompletos.' }) };
     }
 
@@ -23,20 +24,32 @@ exports.handler = async (event) => {
       'Notion-Version': '2022-06-28',
     };
 
-    const updates = pageIds.map(pageId =>
-      fetch(`https://api.notion.com/v1/pages/${pageId}`, {
-        method: 'PATCH',
+    // Cria uma nova linha no Notion para cada data selecionada
+    const creates = dates.map(date =>
+      fetch('https://api.notion.com/v1/pages', {
+        method: 'POST',
         headers,
         body: JSON.stringify({
+          parent: { database_id: DATABASE_ID },
           properties: {
-            'Data de Disponibilidade': { date: { start: date } },
-            'Período': { select: { name: period } },
+            'Nome': {
+              title: [{ text: { content: name } }]
+            },
+            'Instrumento': {
+              multi_select: instruments.map(i => ({ name: i }))
+            },
+            'Data de Disponibilidade': {
+              date: { start: date }
+            },
+            'Período': {
+              select: { name: period }
+            }
           }
         })
       })
     );
 
-    await Promise.all(updates);
+    await Promise.all(creates);
 
     return {
       statusCode: 200,
