@@ -4,7 +4,6 @@ exports.handler = async (event) => {
   }
 
   const NOTION_TOKEN = process.env.NOTION_TOKEN;
-  const DATABASE_ID = process.env.DATABASE_ID || '6470132cae26424a963e735ca5e34f2a';
   const WHATSAPP_LINKS = {
     'Manhã': process.env.WHATSAPP_MANHA || '',
     'Tarde': process.env.WHATSAPP_TARDE || '',
@@ -12,9 +11,9 @@ exports.handler = async (event) => {
   };
 
   try {
-    const { name, instruments, dates, period } = JSON.parse(event.body);
+    const { pageIds, dates, period } = JSON.parse(event.body);
 
-    if (!name || !instruments || !dates || dates.length === 0 || !period) {
+    if (!pageIds || !dates || dates.length === 0 || !period) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Dados incompletos.' }) };
     }
 
@@ -24,32 +23,35 @@ exports.handler = async (event) => {
       'Notion-Version': '2022-06-28',
     };
 
-    // Cria uma nova linha no Notion para cada data selecionada
-    const creates = dates.map(date =>
-      fetch('https://api.notion.com/v1/pages', {
-        method: 'POST',
+    // Monta as propriedades de Data 1 a Data 6
+    const dateFields = ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5', 'Data 6'];
+    const dateProperties = {};
+
+    dateFields.forEach((field, i) => {
+      dateProperties[field] = dates[i]
+        ? { date: { start: dates[i] } }
+        : { date: null }; // limpa o campo se não tiver data
+    });
+
+    // Atualiza todos os registros do músico
+    const updates = pageIds.map(pageId =>
+      fetch(`https://api.notion.com/v1/pages/${pageId}`, {
+        method: 'PATCH',
         headers,
         body: JSON.stringify({
-          parent: { database_id: DATABASE_ID },
           properties: {
-            'Nome': {
-              title: [{ text: { content: name } }]
-            },
-            'Instrumento': {
-              multi_select: instruments.map(i => ({ name: i }))
-            },
-            'Data de Disponibilidade': {
-              date: { start: date }
-            },
-            'Período': {
-              select: { name: period }
-            }
+            ...dateProperties,
+            'Período': { select: { name: period } },
           }
         })
       })
     );
 
-    await Promise.all(creates);
+    const results = await Promise.all(updates);
+    const failed = results.filter(r => !r.ok);
+    if (failed.length > 0) {
+      return { statusCode: 500, body: JSON.stringify({ error: 'Erro ao atualizar registros.' }) };
+    }
 
     return {
       statusCode: 200,
