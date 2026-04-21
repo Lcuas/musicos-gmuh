@@ -24,21 +24,16 @@ exports.handler = async (event) => {
       'Notion-Version': '2022-06-28',
     };
 
-    // Monta as propriedades: Disponibilidade 1..6 (texto "DD/MM/AAAA · Período")
-    const properties = {};
-    for (let i = 0; i < 6; i++) {
-      const num = i + 1;
-      const entry = entries[i];
-      if (entry) {
-        const [y, m, d] = entry.date.split('-');
-        const text = `${d}/${m}/${y} · ${entry.period}`;
-        properties[`Disponibilidade ${num}`] = {
-          rich_text: [{ type: 'text', text: { content: text } }]
-        };
-      } else {
-        properties[`Disponibilidade ${num}`] = { rich_text: [] };
+    // Monta campo único "Disponibilidades" com todas as entradas (sem limite)
+    const lines = entries.map(e => {
+      const [y, m, d] = e.date.split('-');
+      return `${d}/${m}/${y} · ${e.period}`;
+    });
+    const properties = {
+      'Disponibilidades': {
+        rich_text: [{ type: 'text', text: { content: lines.join('\n') } }]
       }
-    }
+    };
 
     // Atualiza todos os registros do músico
     const updates = pageIds.map(pageId =>
