@@ -24,13 +24,20 @@ exports.handler = async (event) => {
       'Notion-Version': '2022-06-28',
     };
 
-    // Monta as propriedades: Data 1..6 e Período 1..6
+    // Monta as propriedades: Disponibilidade 1..6 (texto "DD/MM/AAAA · Período")
     const properties = {};
     for (let i = 0; i < 6; i++) {
       const num = i + 1;
       const entry = entries[i];
-      properties[`Data ${num}`]    = entry ? { date: { start: entry.date } } : { date: null };
-      properties[`Período ${num}`] = entry ? { select: { name: entry.period } } : { select: null };
+      if (entry) {
+        const [y, m, d] = entry.date.split('-');
+        const text = `${d}/${m}/${y} · ${entry.period}`;
+        properties[`Disponibilidade ${num}`] = {
+          rich_text: [{ type: 'text', text: { content: text } }]
+        };
+      } else {
+        properties[`Disponibilidade ${num}`] = { rich_text: [] };
+      }
     }
 
     // Atualiza todos os registros do músico
