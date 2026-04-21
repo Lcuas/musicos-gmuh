@@ -367,8 +367,18 @@
       <div class="divider">✦ ✦ ✦</div>
 
       <div class="field">
-        <label>Data de Disponibilidade</label>
-        <input type="date" id="date-input">
+        <label>Datas de Disponibilidade</label>
+        <div style="display:flex; gap:8px;">
+          <input type="date" id="date-input" style="flex:1;">
+          <button type="button" onclick="addDate()" id="btn-add-date"
+            style="padding:0 18px; background:#c9a227; color:#0c1a4a; border:none; border-radius:12px;
+                   font-family:'Oswald',sans-serif; font-size:20px; font-weight:700; cursor:pointer;
+                   transition:background 0.2s; flex-shrink:0;">+</button>
+        </div>
+        <div id="dates-list" style="display:none; margin-top:10px; display:flex; flex-wrap:wrap; gap:8px;"></div>
+        <div id="dates-empty" style="margin-top:8px; font-size:12px; color:rgba(255,255,255,0.3); font-style:italic;">
+          Selecione uma data e clique em + para adicionar
+        </div>
       </div>
 
       <div class="field">
@@ -412,12 +422,49 @@
     let musicians = [];
     let selectedMusician = null;
     let selectedPeriod = '';
+    let selectedDates = [];
 
     const todayStr = new Date().toLocaleDateString('en-CA');
     const dateInput = document.getElementById('date-input');
     dateInput.min = todayStr;
     dateInput.value = todayStr;
-    dateInput.addEventListener('change', validate);
+
+    function addDate() {
+      const val = dateInput.value;
+      if (!val) return;
+      if (selectedDates.includes(val)) return; // evita duplicata
+      selectedDates.push(val);
+      renderDates();
+      validate();
+    }
+
+    function removeDate(date) {
+      selectedDates = selectedDates.filter(d => d !== date);
+      renderDates();
+      validate();
+    }
+
+    function renderDates() {
+      const list = document.getElementById('dates-list');
+      const empty = document.getElementById('dates-empty');
+      if (selectedDates.length === 0) {
+        list.style.display = 'none';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+      list.style.display = 'flex';
+      list.innerHTML = selectedDates.map(d => {
+        const label = new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+        return `<span style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;
+                  background:rgba(201,162,39,0.15);border:1px solid rgba(201,162,39,0.4);
+                  border-radius:20px;font-size:13px;color:#c9a227;font-weight:600;">
+                  📅 ${label}
+                  <span onclick="removeDate('${d}')" style="cursor:pointer;color:rgba(201,162,39,0.6);
+                    font-size:15px;line-height:1;margin-left:2px;" title="Remover">×</span>
+                </span>`;
+      }).join('');
+    }
 
     async function loadMusicians() {
       try {
@@ -466,7 +513,7 @@
     }
 
     function validate() {
-      const ok = selectedMusician && selectedPeriod && dateInput.value;
+      const ok = selectedMusician && selectedPeriod && selectedDates.length > 0;
       document.getElementById('btn-submit').disabled = !ok;
     }
 
@@ -487,8 +534,9 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            pageIds: selectedMusician.pageIds,
-            date: dateInput.value,
+            name: selectedMusician.name,
+            instruments: selectedMusician.instruments,
+            dates: selectedDates,
             period: selectedPeriod,
           }),
         });
@@ -510,13 +558,14 @@
     function showSuccess(date, whatsappLink) {
       document.getElementById('form-section').style.display = 'none';
       document.getElementById('success-section').style.display = 'block';
-      const dateFormatted = new Date(date + 'T12:00:00').toLocaleDateString('pt-BR', {
-        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-      });
       const icons = { 'Manhã': '🌅', 'Tarde': '☀️', 'Noite': '🌙' };
+      const datesFormatted = selectedDates.map(d =>
+        new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' })
+      ).join(' · ');
       document.getElementById('success-msg').innerHTML =
-        `<strong>${selectedMusician.name}</strong> disponível<br>` +
-        `${icons[selectedPeriod]} <strong>${selectedPeriod}</strong> · ${dateFormatted}`;
+        `<strong>${selectedMusician.name}</strong><br>` +
+        `${icons[selectedPeriod]} <strong>${selectedPeriod}</strong><br>` +
+        `<span style="font-size:13px;opacity:0.8;">📅 ${datesFormatted}</span>`;
       const waBtn = document.getElementById('whatsapp-btn');
       if (whatsappLink) { waBtn.href = whatsappLink; waBtn.style.display = 'flex'; }
     }
@@ -527,7 +576,9 @@
       document.getElementById('musician-select').value = '';
       selectedMusician = null;
       selectedPeriod = '';
+      selectedDates = [];
       renderTags();
+      renderDates();
       dateInput.value = todayStr;
       document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('selected'));
       document.getElementById('btn-submit').disabled = true;
