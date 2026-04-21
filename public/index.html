@@ -3,124 +3,182 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GMUH 2026 – Disponibilidade</title>
+  <title>GMUH 2026 – Disponibilidade de Músicos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(160deg, #0d1b3e 0%, #1a3a6e 60%, #0d1b3e 100%);
+      font-family: 'Inter', sans-serif;
       min-height: 100vh;
+      background: linear-gradient(170deg, #0c1a4a 0%, #1a0c00 50%, #2d1600 100%);
       display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 24px 16px 40px;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 48px;
     }
 
+    /* ── Header ── */
+    .site-header {
+      width: 100%;
+      background: linear-gradient(135deg, #0a1740 0%, #0d2060 100%);
+      border-bottom: 3px solid #c9a227;
+      padding: 20px 24px 18px;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .site-header .pre {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(201,162,39,0.8);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+    }
+    .site-header h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+    .site-header h1 em {
+      color: #c9a227;
+      font-style: normal;
+    }
+    .site-header .sub {
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #c9a227;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 6px;
+    }
+    .site-header .tagline {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 8px;
+      font-style: italic;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Card ── */
     .card {
-      background: #fff;
-      border-radius: 24px;
-      padding: 32px 24px;
       width: 100%;
       max-width: 440px;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+      margin: 0 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,162,39,0.25);
+      border-radius: 20px;
+      padding: 28px 24px;
+      backdrop-filter: blur(12px);
     }
 
-    .header {
+    .card-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #c9a227;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
       text-align: center;
-      margin-bottom: 32px;
-    }
-    .header .emblem {
-      width: 64px;
-      height: 64px;
-      background: linear-gradient(135deg, #1a3a6e, #0d1b3e);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 16px;
-      font-size: 32px;
-    }
-    .header h1 {
-      font-size: 22px;
-      font-weight: 800;
-      color: #0d1b3e;
-      letter-spacing: -0.3px;
-    }
-    .header p {
-      color: #888;
-      font-size: 14px;
-      margin-top: 4px;
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid rgba(201,162,39,0.2);
     }
 
-    .field { margin-bottom: 22px; }
+    /* ── Fields ── */
+    .field { margin-bottom: 20px; }
 
     label {
       display: block;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
-      color: #999;
+      color: #c9a227;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 1.2px;
       margin-bottom: 8px;
     }
 
-    .select-wrapper {
-      position: relative;
-    }
+    .select-wrapper { position: relative; }
     .select-wrapper::after {
       content: '▾';
       position: absolute;
-      right: 16px;
+      right: 14px;
       top: 50%;
       transform: translateY(-50%);
-      color: #aaa;
+      color: #c9a227;
       pointer-events: none;
+      font-size: 14px;
     }
+
     select, input[type="date"] {
       width: 100%;
       padding: 14px 16px;
-      border: 2px solid #ebebeb;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(201,162,39,0.3);
       border-radius: 12px;
-      font-size: 16px;
-      color: #222;
-      background: #fafafa;
+      font-size: 15px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
       appearance: none;
       -webkit-appearance: none;
       transition: border-color 0.2s, background 0.2s;
       cursor: pointer;
     }
+    select option { background: #0c1a4a; color: #fff; }
     select:focus, input[type="date"]:focus {
       outline: none;
-      border-color: #1a3a6e;
-      background: #fff;
+      border-color: #c9a227;
+      background: rgba(201,162,39,0.06);
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.7) sepia(1) saturate(3) hue-rotate(5deg);
+      cursor: pointer;
     }
 
+    /* ── Tags ── */
     .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      min-height: 42px;
+      min-height: 46px;
       align-items: center;
       padding: 10px 14px;
-      background: #fafafa;
-      border: 2px solid #ebebeb;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,162,39,0.2);
       border-radius: 12px;
     }
     .tag {
       padding: 5px 13px;
       border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .tag-violao   { background: #d4edda; color: #155724; }
-    .tag-teclado  { background: #cce5ff; color: #004085; }
-    .tag-baixo    { background: #ffe5cc; color: #6d3400; }
-    .tag-guitarra { background: #ffd6d6; color: #6b0000; }
-    .tag-bateria  { background: #e8d5ff; color: #3d007a; }
-    .tag-default  { background: #e9ecef; color: #495057; }
-    .tag-placeholder { color: #bbb; font-size: 14px; }
+    .tag-violao   { background: rgba(40,167,69,0.2);  color: #6fcf97; border: 1px solid rgba(40,167,69,0.35); }
+    .tag-teclado  { background: rgba(30,100,255,0.2);  color: #7eb8ff; border: 1px solid rgba(30,100,255,0.35); }
+    .tag-baixo    { background: rgba(255,140,0,0.2);   color: #ffb347; border: 1px solid rgba(255,140,0,0.35); }
+    .tag-guitarra { background: rgba(220,53,69,0.2);   color: #ff8a93; border: 1px solid rgba(220,53,69,0.35); }
+    .tag-bateria  { background: rgba(111,66,193,0.2);  color: #c39af5; border: 1px solid rgba(111,66,193,0.35); }
+    .tag-default  { background: rgba(255,255,255,0.1); color: #ccc; }
+    .tag-placeholder { color: rgba(255,255,255,0.25); font-size: 13px; font-style: italic; }
 
+    /* ── Divider ── */
+    .divider {
+      text-align: center;
+      color: rgba(201,162,39,0.4);
+      font-size: 14px;
+      letter-spacing: 8px;
+      margin: 4px 0 22px;
+    }
+
+    /* ── Period ── */
     .period-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -128,78 +186,92 @@
     }
     .period-btn {
       padding: 14px 6px;
-      border: 2px solid #ebebeb;
-      border-radius: 14px;
-      background: #fafafa;
+      border: 1px solid rgba(201,162,39,0.25);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
       cursor: pointer;
       text-align: center;
+      font-family: 'Oswald', sans-serif;
       font-size: 13px;
-      font-weight: 700;
-      color: #666;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       transition: all 0.15s;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
     }
-    .period-btn .icon {
-      font-size: 26px;
-      display: block;
-      margin-bottom: 6px;
-    }
-    .period-btn:hover { border-color: #1a3a6e; color: #1a3a6e; }
+    .period-btn .icon { font-size: 24px; display: block; margin-bottom: 6px; }
+    .period-btn:hover { border-color: #c9a227; color: #c9a227; background: rgba(201,162,39,0.06); }
     .period-btn.selected {
-      border-color: #1a3a6e;
-      background: #1a3a6e;
-      color: #fff;
+      border-color: #c9a227;
+      background: #c9a227;
+      color: #0c1a4a;
     }
 
+    /* ── Button ── */
     .btn-submit {
       width: 100%;
       padding: 17px;
-      background: #1a3a6e;
-      color: #fff;
+      background: #c9a227;
+      color: #0c1a4a;
       border: none;
-      border-radius: 14px;
-      font-size: 17px;
-      font-weight: 800;
+      border-radius: 12px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
       cursor: pointer;
-      margin-top: 6px;
-      transition: background 0.2s, transform 0.1s;
-      letter-spacing: 0.2px;
+      margin-top: 8px;
+      transition: all 0.2s;
     }
-    .btn-submit:hover:not(:disabled) { background: #0d2455; transform: translateY(-1px); }
+    .btn-submit:hover:not(:disabled) {
+      background: #e0b82d;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(201,162,39,0.35);
+    }
     .btn-submit:active:not(:disabled) { transform: translateY(0); }
-    .btn-submit:disabled { background: #c5c5c5; cursor: not-allowed; }
+    .btn-submit:disabled {
+      background: rgba(201,162,39,0.2);
+      color: rgba(255,255,255,0.2);
+      cursor: not-allowed;
+    }
 
+    /* ── Error ── */
     .error-box {
-      background: #fff0f0;
-      color: #c0392b;
-      border: 1px solid #f5c6cb;
+      background: rgba(220,53,69,0.12);
+      color: #ff8a93;
+      border: 1px solid rgba(220,53,69,0.3);
       padding: 12px 16px;
       border-radius: 10px;
       font-size: 14px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       display: none;
     }
 
-    /* ── Tela de sucesso ── */
+    /* ── Sucesso ── */
     .success { display: none; text-align: center; }
-    .success .check-icon { font-size: 72px; margin-bottom: 16px; }
+    .success .check-icon { font-size: 68px; margin-bottom: 16px; }
     .success h2 {
-      font-size: 22px;
-      font-weight: 800;
-      color: #0d1b3e;
-      margin-bottom: 10px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #c9a227;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 14px;
     }
     .success .msg {
-      color: #555;
+      color: rgba(255,255,255,0.85);
       font-size: 15px;
-      line-height: 1.6;
+      line-height: 1.7;
       margin-bottom: 28px;
-      background: #f0f4ff;
-      border-radius: 12px;
-      padding: 16px;
+      background: rgba(201,162,39,0.07);
+      border: 1px solid rgba(201,162,39,0.2);
+      border-radius: 14px;
+      padding: 18px;
     }
-
     .btn-whatsapp {
       display: flex;
       align-items: center;
@@ -208,256 +280,262 @@
       padding: 16px 24px;
       background: #25D366;
       color: #fff;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 800;
+      border-radius: 12px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       text-decoration: none;
       margin-bottom: 14px;
-      transition: background 0.2s, transform 0.1s;
+      transition: all 0.2s;
     }
     .btn-whatsapp:hover { background: #1ebe5d; transform: translateY(-1px); }
-
     .btn-novo {
-      background: none;
-      border: 2px solid #ddd;
-      border-radius: 14px;
+      background: transparent;
+      border: 1px solid rgba(201,162,39,0.35);
+      border-radius: 12px;
       padding: 13px 24px;
-      color: #555;
-      font-size: 15px;
+      color: #c9a227;
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       cursor: pointer;
       width: 100%;
-      transition: border-color 0.2s, color 0.2s;
+      transition: all 0.2s;
     }
-    .btn-novo:hover { border-color: #1a3a6e; color: #1a3a6e; }
+    .btn-novo:hover { background: rgba(201,162,39,0.08); border-color: #c9a227; }
 
-    /* spinner */
     .spinner {
       display: inline-block;
-      width: 18px; height: 18px;
-      border: 3px solid rgba(255,255,255,0.4);
-      border-top-color: #fff;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(12,26,74,0.3);
+      border-top-color: #0c1a4a;
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       vertical-align: middle;
       margin-right: 8px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Footer ── */
+    .site-footer {
+      margin-top: 24px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
   </style>
 </head>
 <body>
-<div class="card">
 
-  <!-- Cabeçalho -->
-  <div class="header">
-    <div class="emblem">🎵</div>
-    <h1>GMUH 2026</h1>
-    <p>Informe sua disponibilidade</p>
+  <!-- Header -->
+  <div class="site-header">
+    <div class="pre">🔥 Gideões Missionários da Última Hora</div>
+    <h1><em>41º</em> Congresso</h1>
+    <div class="sub">Internacional de Missões · 2026</div>
+    <div class="tagline">"A chama missionária não pode se apagar"</div>
   </div>
 
-  <!-- Formulário -->
-  <div id="form-section">
-    <div id="error-box" class="error-box"></div>
+  <!-- Card principal -->
+  <div class="card">
+    <div class="card-title">🎵 Disponibilidade dos Músicos</div>
 
-    <div class="field">
-      <label>Seu Nome</label>
-      <div class="select-wrapper">
-        <select id="musician-select">
-          <option value="">Carregando músicos…</option>
-        </select>
-      </div>
-    </div>
+    <!-- Formulário -->
+    <div id="form-section">
+      <div id="error-box" class="error-box"></div>
 
-    <div class="field">
-      <label>Instrumento(s)</label>
-      <div class="tags" id="tags">
-        <span class="tag-placeholder">Selecione seu nome acima</span>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Data de Disponibilidade</label>
-      <input type="date" id="date-input">
-    </div>
-
-    <div class="field">
-      <label>Período</label>
-      <div class="period-grid">
-        <div class="period-btn" data-period="Manhã" onclick="selectPeriod(this)">
-          <span class="icon">🌅</span>Manhã
-        </div>
-        <div class="period-btn" data-period="Tarde" onclick="selectPeriod(this)">
-          <span class="icon">☀️</span>Tarde
-        </div>
-        <div class="period-btn" data-period="Noite" onclick="selectPeriod(this)">
-          <span class="icon">🌙</span>Noite
+      <div class="field">
+        <label>Seu Nome</label>
+        <div class="select-wrapper">
+          <select id="musician-select">
+            <option value="">Carregando músicos…</option>
+          </select>
         </div>
       </div>
+
+      <div class="field">
+        <label>Instrumento(s)</label>
+        <div class="tags" id="tags">
+          <span class="tag-placeholder">Selecione seu nome acima</span>
+        </div>
+      </div>
+
+      <div class="divider">✦ ✦ ✦</div>
+
+      <div class="field">
+        <label>Data de Disponibilidade</label>
+        <input type="date" id="date-input">
+      </div>
+
+      <div class="field">
+        <label>Período</label>
+        <div class="period-grid">
+          <div class="period-btn" data-period="Manhã" onclick="selectPeriod(this)">
+            <span class="icon">🌅</span>Manhã
+          </div>
+          <div class="period-btn" data-period="Tarde" onclick="selectPeriod(this)">
+            <span class="icon">☀️</span>Tarde
+          </div>
+          <div class="period-btn" data-period="Noite" onclick="selectPeriod(this)">
+            <span class="icon">🌙</span>Noite
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-submit" id="btn-submit" onclick="submitForm()" disabled>
+        🔥 Confirmar Disponibilidade
+      </button>
     </div>
 
-    <button class="btn-submit" id="btn-submit" onclick="submitForm()" disabled>
-      Confirmar Disponibilidade
-    </button>
+    <!-- Tela de sucesso -->
+    <div id="success-section" class="success">
+      <div class="check-icon">✅</div>
+      <h2>Confirmado!</h2>
+      <p class="msg" id="success-msg"></p>
+      <a id="whatsapp-btn" class="btn-whatsapp" href="#" target="_blank" style="display:none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Entrar no Grupo WhatsApp
+      </a>
+      <button class="btn-novo" onclick="resetForm()">Registrar Outra Disponibilidade</button>
+    </div>
   </div>
 
-  <!-- Tela de sucesso -->
-  <div id="success-section" class="success">
-    <div class="check-icon">✅</div>
-    <h2>Confirmado!</h2>
-    <p class="msg" id="success-msg"></p>
-    <a id="whatsapp-btn" class="btn-whatsapp" href="#" target="_blank" style="display:none;">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-      </svg>
-      Entrar no Grupo do WhatsApp
-    </a>
-    <button class="btn-novo" onclick="resetForm()">Registrar outra disponibilidade</button>
-  </div>
+  <div class="site-footer">Gideões Missionários da Última Hora · GMUH 2026</div>
 
-</div>
+  <script>
+    let musicians = [];
+    let selectedMusician = null;
+    let selectedPeriod = '';
 
-<script>
-  let musicians = [];
-  let selectedMusician = null;
-  let selectedPeriod = '';
+    const todayStr = new Date().toLocaleDateString('en-CA');
+    const dateInput = document.getElementById('date-input');
+    dateInput.min = todayStr;
+    dateInput.value = todayStr;
+    dateInput.addEventListener('change', validate);
 
-  // Data mínima = hoje
-  const todayStr = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD local
-  const dateInput = document.getElementById('date-input');
-  dateInput.min = todayStr;
-  dateInput.value = todayStr;
-  dateInput.addEventListener('change', validate);
-
-  // Carrega músicos da API
-  async function loadMusicians() {
-    try {
-      const res = await fetch('/api/musicians');
-      if (!res.ok) throw new Error();
-      musicians = await res.json();
-
-      const sel = document.getElementById('musician-select');
-      sel.innerHTML = '<option value="">Selecione seu nome…</option>';
-      musicians.forEach(m => {
-        const opt = document.createElement('option');
-        opt.value = m.name;
-        opt.textContent = m.name;
-        sel.appendChild(opt);
-      });
-    } catch {
-      showError('Não foi possível carregar a lista de músicos. Verifique a conexão.');
-    }
-  }
-
-  document.getElementById('musician-select').addEventListener('change', function () {
-    selectedMusician = musicians.find(m => m.name === this.value) || null;
-    renderTags();
-    validate();
-  });
-
-  const tagClass = {
-    'Violão': 'tag-violao',
-    'Teclado': 'tag-teclado',
-    'Baixo': 'tag-baixo',
-    'Guitarra': 'tag-guitarra',
-    'Bateria': 'tag-bateria',
-  };
-
-  function renderTags() {
-    const container = document.getElementById('tags');
-    if (!selectedMusician || selectedMusician.instruments.length === 0) {
-      container.innerHTML = '<span class="tag-placeholder">Selecione seu nome acima</span>';
-      return;
-    }
-    container.innerHTML = selectedMusician.instruments
-      .map(i => `<span class="tag ${tagClass[i] || 'tag-default'}">${i}</span>`)
-      .join('');
-  }
-
-  function selectPeriod(el) {
-    document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedPeriod = el.dataset.period;
-    validate();
-  }
-
-  function validate() {
-    const ok = selectedMusician && selectedPeriod && dateInput.value;
-    document.getElementById('btn-submit').disabled = !ok;
-  }
-
-  function showError(msg) {
-    const box = document.getElementById('error-box');
-    box.textContent = msg;
-    box.style.display = 'block';
-  }
-
-  async function submitForm() {
-    const btn = document.getElementById('btn-submit');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span>Enviando…';
-    document.getElementById('error-box').style.display = 'none';
-
-    try {
-      const res = await fetch('/api/update', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pageIds: selectedMusician.pageIds,
-          date: dateInput.value,
-          period: selectedPeriod,
-        }),
-      });
-      const data = await res.json();
-
-      if (data.success) {
-        showSuccess(dateInput.value, data.whatsappLink);
-      } else {
-        showError(data.error || 'Erro ao salvar. Tente novamente.');
-        btn.disabled = false;
-        btn.textContent = 'Confirmar Disponibilidade';
+    async function loadMusicians() {
+      try {
+        const res = await fetch('/api/musicians');
+        if (!res.ok) throw new Error();
+        musicians = await res.json();
+        const sel = document.getElementById('musician-select');
+        sel.innerHTML = '<option value="">Selecione seu nome…</option>';
+        musicians.forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m.name;
+          opt.textContent = m.name;
+          sel.appendChild(opt);
+        });
+      } catch {
+        showError('Não foi possível carregar a lista de músicos. Verifique a conexão.');
       }
-    } catch {
-      showError('Erro de conexão. Verifique sua internet e tente novamente.');
-      btn.disabled = false;
-      btn.textContent = 'Confirmar Disponibilidade';
     }
-  }
 
-  function showSuccess(date, whatsappLink) {
-    document.getElementById('form-section').style.display = 'none';
-    document.getElementById('success-section').style.display = 'block';
-
-    const dateFormatted = new Date(date + 'T12:00:00').toLocaleDateString('pt-BR', {
-      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    document.getElementById('musician-select').addEventListener('change', function () {
+      selectedMusician = musicians.find(m => m.name === this.value) || null;
+      renderTags();
+      validate();
     });
 
-    const periodIcons = { 'Manhã': '🌅', 'Tarde': '☀️', 'Noite': '🌙' };
-    document.getElementById('success-msg').innerHTML =
-      `<strong>${selectedMusician.name}</strong> está disponível<br>` +
-      `${periodIcons[selectedPeriod] || ''} <strong>${selectedPeriod}</strong> · ${dateFormatted}`;
+    const tagClass = {
+      'Violão': 'tag-violao', 'Teclado': 'tag-teclado',
+      'Baixo': 'tag-baixo', 'Guitarra': 'tag-guitarra', 'Bateria': 'tag-bateria',
+    };
 
-    const waBtn = document.getElementById('whatsapp-btn');
-    if (whatsappLink) {
-      waBtn.href = whatsappLink;
-      waBtn.style.display = 'flex';
+    function renderTags() {
+      const container = document.getElementById('tags');
+      if (!selectedMusician || selectedMusician.instruments.length === 0) {
+        container.innerHTML = '<span class="tag-placeholder">Selecione seu nome acima</span>';
+        return;
+      }
+      container.innerHTML = selectedMusician.instruments
+        .map(i => `<span class="tag ${tagClass[i] || 'tag-default'}">${i}</span>`).join('');
     }
-  }
 
-  function resetForm() {
-    document.getElementById('form-section').style.display = 'block';
-    document.getElementById('success-section').style.display = 'none';
-    document.getElementById('musician-select').value = '';
-    selectedMusician = null;
-    selectedPeriod = '';
-    renderTags();
-    dateInput.value = todayStr;
-    document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('selected'));
-    document.getElementById('btn-submit').disabled = true;
-    document.getElementById('btn-submit').textContent = 'Confirmar Disponibilidade';
-    document.getElementById('error-box').style.display = 'none';
-  }
+    function selectPeriod(el) {
+      document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedPeriod = el.dataset.period;
+      validate();
+    }
 
-  loadMusicians();
-</script>
+    function validate() {
+      const ok = selectedMusician && selectedPeriod && dateInput.value;
+      document.getElementById('btn-submit').disabled = !ok;
+    }
+
+    function showError(msg) {
+      const box = document.getElementById('error-box');
+      box.textContent = msg;
+      box.style.display = 'block';
+    }
+
+    async function submitForm() {
+      const btn = document.getElementById('btn-submit');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Enviando…';
+      document.getElementById('error-box').style.display = 'none';
+
+      try {
+        const res = await fetch('/api/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pageIds: selectedMusician.pageIds,
+            date: dateInput.value,
+            period: selectedPeriod,
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          showSuccess(dateInput.value, data.whatsappLink);
+        } else {
+          showError(data.error || 'Erro ao salvar. Tente novamente.');
+          btn.disabled = false;
+          btn.innerHTML = '🔥 Confirmar Disponibilidade';
+        }
+      } catch {
+        showError('Erro de conexão. Tente novamente.');
+        btn.disabled = false;
+        btn.innerHTML = '🔥 Confirmar Disponibilidade';
+      }
+    }
+
+    function showSuccess(date, whatsappLink) {
+      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('success-section').style.display = 'block';
+      const dateFormatted = new Date(date + 'T12:00:00').toLocaleDateString('pt-BR', {
+        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+      });
+      const icons = { 'Manhã': '🌅', 'Tarde': '☀️', 'Noite': '🌙' };
+      document.getElementById('success-msg').innerHTML =
+        `<strong>${selectedMusician.name}</strong> disponível<br>` +
+        `${icons[selectedPeriod]} <strong>${selectedPeriod}</strong> · ${dateFormatted}`;
+      const waBtn = document.getElementById('whatsapp-btn');
+      if (whatsappLink) { waBtn.href = whatsappLink; waBtn.style.display = 'flex'; }
+    }
+
+    function resetForm() {
+      document.getElementById('form-section').style.display = 'block';
+      document.getElementById('success-section').style.display = 'none';
+      document.getElementById('musician-select').value = '';
+      selectedMusician = null;
+      selectedPeriod = '';
+      renderTags();
+      dateInput.value = todayStr;
+      document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('selected'));
+      document.getElementById('btn-submit').disabled = true;
+      document.getElementById('btn-submit').innerHTML = '🔥 Confirmar Disponibilidade';
+      document.getElementById('error-box').style.display = 'none';
+    }
+
+    loadMusicians();
+  </script>
 </body>
 </html>
